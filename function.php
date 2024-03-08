@@ -8,11 +8,14 @@ add_action('wp_enqueue_scripts', 'add_datatables');
 function my_ajax_gettaxonomy() {
   header("Content-Type: application/json");
   $request= $_POST;
+  $taxonomy=  $request['taxonomy'];
   $columns = array(
-    0 => 'post_title'
+    0 => 'post_title',
+    1 => 'count'
   );
+  
   $args = array(
-    'taxonomy'      => array( 'taxonomy' ),
+    'taxonomy'      => array( $taxonomy ),
     'number' => $request['length'],
     'show_count' => true,
     'offset' => $request['start'],
@@ -20,9 +23,10 @@ function my_ajax_gettaxonomy() {
     ); 
 
   if ($request['order'][0]['column'] == 0) {
-
     $args['orderby'] = $columns[$request['order'][0]['column']];
+  }elseif ($request['order'][0]['column'] == 1) {
 
+    $args['orderby'] = 'count';
   }
   //$request['search']['value'] <= Value from search
 
@@ -34,7 +38,7 @@ function my_ajax_gettaxonomy() {
   if( !empty($request['search']['value']) ) {
     $totalData=sizeof ($terms);
   }else{
-     $totalData   = wp_count_terms( 'taxonomy', array( 'hide_empty' => TRUE ) ); 
+     $totalData   = wp_count_terms( $taxonomy, array( 'hide_empty' => TRUE ) ); 
   }
   if ($terms) {
       foreach($terms as $term){
