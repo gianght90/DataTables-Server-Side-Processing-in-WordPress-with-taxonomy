@@ -1,3 +1,10 @@
+/* Datatable */
+function add_datatables(){
+  wp_enqueue_script('datatables', '//cdn.datatables.net/2.0.2/js/dataTables.min.js', array('jquery') );
+  wp_enqueue_style('datatables_style', '//cdn.datatables.net/2.0.2/css/dataTables.dataTables.min.css');
+}
+add_action('wp_enqueue_scripts', 'add_datatables');
+
 function my_ajax_gettaxonomy() {
   header("Content-Type: application/json");
   $request= $_POST;
