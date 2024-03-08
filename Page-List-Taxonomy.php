@@ -27,7 +27,8 @@ jQuery(document).ready(function($) {
               dataType: "json",
               url: "/wp-admin/admin-ajax.php", //this is wordpress ajax file which is already avaiable in wordpress
               data: {
-                    action:'list_taxonomy'
+                    action:'list_taxonomy',
+		    taxonomy:'', //This is custom taxonomy
                 },
 			},
 	lengthMenu: [[25], [25]],
